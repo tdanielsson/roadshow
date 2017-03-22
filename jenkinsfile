@@ -5,7 +5,7 @@ pipeline {
         stage('Check') { 
             steps { 
                 sh './gradlew clean check' 
-                stash includes: 'build', name: 'build'
+                stash includes: './build/*', name: 'build'
             }
         }
         stage('Test'){
@@ -17,7 +17,7 @@ pipeline {
         stage('Archive'){
             steps {
                 unstash 'build'
-                archiveArtifacts 'build' 
+                archiveArtifacts artifacts: 'build/**/*.war', fingerprint: true, onlyIfSuccessful: true
             }
         }
     }
