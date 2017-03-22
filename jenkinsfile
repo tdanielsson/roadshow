@@ -1,0 +1,16 @@
+pipeline {
+    agent any 
+
+    stages {
+        stage('Check') { 
+            steps { 
+                sh './gradlew checkk' 
+            }
+        }
+        stage('Test'){
+            steps {
+                junit 'reports/**/*.xml' 
+            }
+        }
+    }
+}
