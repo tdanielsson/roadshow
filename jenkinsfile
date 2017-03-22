@@ -4,12 +4,12 @@ pipeline {
     stages {
         stage('Check') { 
             steps { 
-                sh './gradlew check' 
+                sh './gradlew clean check' 
             }
         }
         stage('Test'){
             steps {
-                junit 'reports/**/*.xml' 
+                junit 'build/test-results/*.xml' 
             }
         }
     }
