@@ -5,11 +5,19 @@ pipeline {
         stage('Check') { 
             steps { 
                 sh './gradlew clean check' 
+                stash includes: 'build', name: 'build'
             }
         }
         stage('Test'){
             steps {
+                unstash 'build'
                 junit 'build/test-results/*.xml' 
+            }
+        }
+        stage('Archive'){
+            steps {
+                unstash 'build'
+                archiveArtifacts 'build' 
             }
         }
     }
